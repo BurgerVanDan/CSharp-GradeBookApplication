@@ -9,7 +9,7 @@ namespace GradeBook.GradeBooks
     public class RankedGradeBook : BaseGradeBook
     {
         public RankedGradeBook(string name)
-            :base(name)
+            : base(name)
         {
             Type = GradeBookType.Ranked;
         }
@@ -25,11 +25,11 @@ namespace GradeBook.GradeBooks
             //LINQ - I do not understand the threshold or the linq below
             var grade = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
 
-            if(grade[threshold - 1] <= averageGrade)
+            if (grade[threshold - 1] <= averageGrade)
             {
                 return 'A';
             }
-            else if(grade[(threshold * 2) - 1] <= averageGrade)
+            else if (grade[(threshold * 2) - 1] <= averageGrade)
             {
                 return 'B';
             }
@@ -44,6 +44,32 @@ namespace GradeBook.GradeBooks
             else
             {
                 return 'F';
+            }
+        }
+
+        public override void CalculateStatistics()
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine("Ranked grading requires at least 5 students with grades in order to properly calculate a student's overall grade.");
+                return;
+            }
+            else
+            {
+                base.CalculateStatistics();
+            }
+        }
+
+        public override void CalculateStudentStatistics(string name)
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine("Ranked grading requires at least 5 students with grades in order to properly calculate a student's overall grade.");
+                return;
+            }
+            else
+            {
+                base.CalculateStudentStatistics(name);
             }
         }
     }
